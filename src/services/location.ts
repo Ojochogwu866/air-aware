@@ -3,8 +3,9 @@ import { AirQualityData, GeoLocation } from '../types/location';
 import { cache } from './cache';
 
 class LocationService {
-	private readonly GEOCODING_API_KEY =process.env.REACT_APP_GEOCODING_API_KEY;
-	private readonly AIR_QUALITY_API_KEY =process.env.REACT_APP_AIR_QUALITY_API_KEY;
+	private readonly GEOCODING_API_KEY = process.env.REACT_APP_GEOCODING_API_KEY;
+	private readonly AIR_QUALITY_API_KEY =
+		process.env.REACT_APP_AIR_QUALITY_API_KEY;
 	private readonly CACHE_TTL = 60 * 60;
 
 	async getCurrentPosition(): Promise<GeolocationPosition> {
@@ -69,13 +70,17 @@ class LocationService {
 		}
 
 		try {
+			if (!this.AIR_QUALITY_API_KEY) {
+				throw new Error('Air quality API key is not configured');
+			}
+
 			const response = await fetch(
-				`https://api.openaq.org/v3/latest?coordinates=${lat},${lon}&radius=10000&limit=1`,
+				`https://api.openaq.org/v3/locations?coordinates=${lat},${lon}&radius=10000&limit=1`,
 				{
-					headers: {
+					headers: new Headers({
 						Accept: 'application/json',
-						Authorization: `Bearer ${this.AIR_QUALITY_API_KEY}`,
-					},
+						'X-API-Key': this.AIR_QUALITY_API_KEY,
+					}),
 				}
 			);
 
@@ -116,6 +121,9 @@ class LocationService {
 		}
 
 		try {
+			if (!this.AIR_QUALITY_API_KEY) {
+				throw new Error('Air quality API key is not configured');
+			}
 			const dateFrom = new Date(
 				Date.now() - days * 24 * 60 * 60 * 1000
 			).toISOString();
@@ -124,7 +132,7 @@ class LocationService {
 				{
 					headers: {
 						Accept: 'application/json',
-						Authorization: `Bearer ${this.AIR_QUALITY_API_KEY}`,
+						'X-API-Key': this.AIR_QUALITY_API_KEY,
 					},
 				}
 			);
