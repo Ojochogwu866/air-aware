@@ -84,7 +84,7 @@ export function useCityList(searchQuery: string) {
 
 		const debounce = setTimeout(searchCities, 300);
 		return () => clearTimeout(debounce);
-	}, [searchQuery]);
+	}, [cities, searchQuery]);
 
 	return { cities, loading, error };
 }

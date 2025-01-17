@@ -11,4 +11,5 @@ export interface AirQualityData {
 	o3: number;
 	pm25: number;
 	timestamp: number;
+	location: GeoLocation;
 }

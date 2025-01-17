@@ -30,7 +30,8 @@ export interface AirQualityState {
 	settings: Settings;
 }
 
-export interface HistoricalData {
+// Modified to extend AirQualityData to include location
+export interface HistoricalData extends AirQualityData {
 	timestamp: number;
 	co2: number;
 	no2: number;

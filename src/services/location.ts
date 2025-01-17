@@ -3,9 +3,8 @@ import { AirQualityData, GeoLocation } from '../types/location';
 import { cache } from './cache';
 
 class LocationService {
-	private readonly GEOCODING_API_KEY = process.env.REACT_APP_GEOCODING_API_KEY;
-	private readonly AIR_QUALITY_API_KEY =
-		process.env.REACT_APP_AIR_QUALITY_API_KEY;
+	private readonly GEOCODING_API_KEY =process.env.REACT_APP_GEOCODING_API_KEY;
+	private readonly AIR_QUALITY_API_KEY =process.env.REACT_APP_AIR_QUALITY_API_KEY;
 	private readonly CACHE_TTL = 60 * 60;
 
 	async getCurrentPosition(): Promise<GeolocationPosition> {
@@ -71,7 +70,7 @@ class LocationService {
 
 		try {
 			const response = await fetch(
-				`https://api.openaq.org/v2/latest?coordinates=${lat},${lon}&radius=10000&limit=1`,
+				`https://api.openaq.org/v3/latest?coordinates=${lat},${lon}&radius=10000&limit=1`,
 				{
 					headers: {
 						Accept: 'application/json',
@@ -93,6 +92,7 @@ class LocationService {
 				o3: this.findMeasurement(measurements, 'o3'),
 				pm25: this.findMeasurement(measurements, 'pm25'),
 				timestamp: Date.now(),
+				location: await this.getCityFromCoordinates(lat, lon),
 			};
 
 			await cache.set(cacheKey, JSON.stringify(airQualityData), 300);
@@ -134,7 +134,11 @@ class LocationService {
 			}
 
 			const data = await response.json();
-			const historicalData = this.formatHistoricalData(data.results || []);
+			const historicalData = await this.formatHistoricalData(
+				data.results || [],
+				lat,
+				lon
+			);
 
 			await cache.set(cacheKey, JSON.stringify(historicalData), this.CACHE_TTL);
 			return historicalData;
@@ -151,7 +155,12 @@ class LocationService {
 		return measurements.find((m) => m.parameter === parameter)?.value || 0;
 	}
 
-	private formatHistoricalData(results: any[]): HistoricalData[] {
+	private async formatHistoricalData(
+		results: any[],
+		lat: number,
+		lon: number
+	): Promise<HistoricalData[]> {
+		const location = await this.getCityFromCoordinates(lat, lon);
 		const dataMap = new Map<string, HistoricalData>();
 
 		results.forEach((result) => {
@@ -165,14 +174,16 @@ class LocationService {
 					no2: 0,
 					o3: 0,
 					pm25: 0,
+					location,
 				});
 			}
 
 			const current = dataMap.get(timeKey)!;
 			const parameter = result.parameter.toLowerCase();
 			if (parameter in current) {
-				current[parameter as keyof Omit<HistoricalData, 'timestamp'>] =
-					result.value;
+				current[
+					parameter as keyof Omit<HistoricalData, 'timestamp' | 'location'>
+				] = result.value;
 			}
 		});
 

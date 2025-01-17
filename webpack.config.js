@@ -11,6 +11,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].js',
+		clean: true,
 	},
 	module: {
 		rules: [
@@ -38,6 +39,11 @@ module.exports = {
 			filename: 'index.html',
 			chunks: ['popup'],
 		}),
+		new HtmlWebpackPlugin({
+			template: './public/index.html',
+			filename: 'background.html',
+			chunks: ['background'],
+		}),
 		new CopyWebpackPlugin({
 			patterns: [
 				{ from: 'public/manifest.json' },
@@ -50,5 +56,5 @@ module.exports = {
 			chunks: 'all',
 		},
 	},
-	devtool: 'cheap-source-map',
+	devtool: 'cheap-source-map', // Keep this for development, or set to 'source-map' for production
 };

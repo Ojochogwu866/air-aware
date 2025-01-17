@@ -1,25 +1,33 @@
 {
-	"short_name": "React App",
-	"name": "Create React App Sample",
-	"icons": [
-		{
-			"src": "favicon.ico",
-			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
-		},
-		{
-			"src": "logo192.png",
-			"type": "image/png",
-			"sizes": "192x192"
-		},
-		{
-			"src": "logo512.png",
-			"type": "image/png",
-			"sizes": "512x512"
-		}
+	"manifest_version": 3,
+	"name": "AirAware",
+	"version": "1.0.0",
+	"description": "Real-time air quality monitoring and alerts for your location",
+	"permissions": ["geolocation", "storage", "alarms", "notifications"],
+	"host_permissions": [
+		"https://api.openaq.org/*",
+		"https://api.opencagedata.com/*"
 	],
-	"start_url": ".",
-	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+	"action": {
+		"default_popup": "index.html",
+		"default_icon": {
+			"16": "icons/icon16.png",
+			"32": "icons/icon32.png",
+			"48": "icons/icon48.png",
+			"128": "icons/icon128.png"
+		}
+	},
+	"icons": {
+		"16": "icons/icon16.png",
+		"32": "icons/icon32.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	}
 }
