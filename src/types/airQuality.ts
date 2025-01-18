@@ -1,7 +1,7 @@
 import { AirQualityData } from './location';
 
 export interface AirQualityThresholds {
-	co2: number;
+	co: number;
 	no2: number;
 	o3: number;
 	pm25: number;
@@ -33,7 +33,7 @@ export interface AirQualityState {
 // Modified to extend AirQualityData to include location
 export interface HistoricalData extends AirQualityData {
 	timestamp: number;
-	co2: number;
+	co: number;
 	no2: number;
 	o3: number;
 	pm25: number;

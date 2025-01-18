@@ -157,7 +157,7 @@ class LocationService {
 			).filter((m): m is { parameter: string; value: number } => m !== null);
 
 			const airQualityData: AirQualityData = {
-				co2: this.findMeasurement(measurements, 'co2'),
+				co: this.findMeasurement(measurements, 'co'),
 				no2: this.findMeasurement(measurements, 'no2'),
 				o3: this.findMeasurement(measurements, 'o3'),
 				pm25: this.findMeasurement(measurements, 'pm25'),
@@ -216,11 +216,11 @@ class LocationService {
 						if (!historicalDataMap.has(timeKey)) {
 							historicalDataMap.set(timeKey, {
 								timestamp,
-								co2: 0,
+								co: 0,
 								no2: 0,
 								o3: 0,
 								pm25: 0,
-								location: null!, // Will be set later
+								location: null!,
 							});
 						}
 
@@ -272,7 +272,7 @@ class LocationService {
 			if (!dataMap.has(timeKey)) {
 				dataMap.set(timeKey, {
 					timestamp,
-					co2: 0,
+					co: 0,
 					no2: 0,
 					o3: 0,
 					pm25: 0,

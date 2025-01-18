@@ -20,7 +20,7 @@ const initialState: AirQualityState = {
 	settings: {
 		refreshInterval: 30,
 		alertThresholds: {
-			co2: 1000,
+			co: 1000,
 			no2: 100,
 			o3: 100,
 			pm25: 35,

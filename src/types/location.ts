@@ -6,7 +6,7 @@ export interface GeoLocation {
 }
 
 export interface AirQualityData {
-	co2: number;
+	co: number;
 	no2: number;
 	o3: number;
 	pm25: number;

@@ -60,7 +60,7 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 					/>
 					<Line
 						type="monotone"
-						dataKey="co2"
+						dataKey="co"
 						stroke="#60A5FA"
 						name="CO₂"
 						dot={false}
