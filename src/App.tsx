@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AirQualityMonitor } from './components/AirQualityMonitor';
 import { useAirQualityContext } from './context/AirQualityContext';
 import { locationService } from './services/location';

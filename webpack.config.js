@@ -56,5 +56,5 @@ module.exports = {
 			chunks: 'all',
 		},
 	},
-	devtool: 'cheap-source-map', // Keep this for development, or set to 'source-map' for production
+	devtool: 'cheap-source-map',
 };

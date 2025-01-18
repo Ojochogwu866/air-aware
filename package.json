@@ -1,6 +1,7 @@
 {
 	"name": "air-aware",
 	"version": "0.1.0",
+	"proxy": "https://api.openaq.org",
 	"private": true,
 	"dependencies": {
 		"@coreui/icons": "^3.0.1",
@@ -8,6 +9,8 @@
 		"@types/chrome": "^0.0.297",
 		"cra-template-typescript": "1.2.0",
 		"date-fns": "^4.1.0",
+		"dotenv-webpack": "^8.1.0",
+		"http-proxy-middleware": "^3.0.3",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-scripts": "5.0.1",
@@ -47,6 +50,7 @@
 		"ts-loader": "^9.5.2",
 		"typescript": "^5.7.3",
 		"webpack": "^5.97.1",
-		"webpack-cli": "^6.0.1"
+		"webpack-cli": "^6.0.1",
+		"webpack-dev-server": "^5.2.0"
 	}
 }

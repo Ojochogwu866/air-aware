@@ -75,12 +75,12 @@ class LocationService {
 			}
 
 			const response = await fetch(
-				`https://api.openaq.org/v3/locations?coordinates=${lat},${lon}&radius=10000&limit=1`,
+				`/api/openaq/v3/locations?coordinates=${lat},${lon}&radius=12000&limit=1000`,
 				{
-					headers: new Headers({
-						Accept: 'application/json',
+					method: 'GET',
+					headers: {
 						'X-API-Key': this.AIR_QUALITY_API_KEY,
-					}),
+					},
 				}
 			);
 
@@ -128,12 +128,12 @@ class LocationService {
 				Date.now() - days * 24 * 60 * 60 * 1000
 			).toISOString();
 			const response = await fetch(
-				`https://api.openaq.org/v2/measurements?coordinates=${lat},${lon}&radius=10000&date_from=${dateFrom}`,
+				`/api/openaq/v2/measurements?coordinates=${lat},${lon}&radius=10000&date_from=${dateFrom}`,
 				{
-					headers: {
+					headers: new Headers({
 						Accept: 'application/json',
 						'X-API-Key': this.AIR_QUALITY_API_KEY,
-					},
+					}),
 				}
 			);
 
