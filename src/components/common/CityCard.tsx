@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AirQualityData, GeoLocation } from '../../types/location';
 import { AirQualityGrid } from '../air-quality/AirQualityGrid';
 import { CityHeader } from '../air-quality/CityHeader';
@@ -14,12 +14,30 @@ export const CityCard: React.FC<CityCardProps> = ({
 	city,
 	onClick,
 	highlight = false,
-}) => (
-	<Card
-		className={`cursor-pointer transition-all ${highlight ? 'border-blue-200 bg-blue-50' : 'bg-white hover:bg-gray-50'} `}
-		onClick={onClick}
-	>
-		<CityHeader city={city.city} country={city.country} />
-		<AirQualityGrid data={city.airQuality} />
-	</Card>
-);
+}) => {
+	const [isHovered, setIsHovered] = useState(false);
+
+	return (
+		<div
+			className="relative"
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
+			<Card
+				className={`cursor-pointer ${
+					highlight ? 'border-[#282828] bg-[#181818]' : 'bg-[#181818]'
+				} ${
+					!highlight && isHovered
+						? 'bg-[#282828] transition-all duration-300 ease-in-out'
+						: 'translate-y-0'
+				} `}
+				onClick={onClick}
+			>
+				<CityHeader city={city.city} country={city.country} />
+				<AirQualityGrid data={city.airQuality} />
+			</Card>
+		</div>
+	);
+};
+
+export default CityCard;

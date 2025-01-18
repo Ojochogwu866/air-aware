@@ -1,6 +1,26 @@
-import { AirQualityMeasurement, HistoricalData } from '../types/airQuality';
+import { HistoricalData } from '../types/airQuality';
 import { AirQualityData, GeoLocation } from '../types/location';
 import { cache } from './cache';
+
+interface Sensor {
+	id: number;
+	name: string;
+	parameter: {
+		id: number;
+		name: string;
+		units: string;
+		displayName: string;
+	};
+}
+
+interface LocationResponse {
+	id: number;
+	sensors: Sensor[];
+	coordinates: {
+		latitude: number;
+		longitude: number;
+	};
+}
 
 class LocationService {
 	private readonly GEOCODING_API_KEY = process.env.REACT_APP_GEOCODING_API_KEY;
@@ -61,6 +81,40 @@ class LocationService {
 		}
 	}
 
+	private async getSensorIdsForParameters(
+		lat: number,
+		lon: number
+	): Promise<Map<string, number>> {
+		const response = await fetch(
+			`/api/openaq/v3/locations?coordinates=${lat},${lon}&radius=12000&limit=1000`,
+			{
+				headers: {
+					'X-API-Key': this.AIR_QUALITY_API_KEY!,
+				},
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		const sensorMap = new Map<string, number>();
+
+		const locations = data.results as LocationResponse[];
+		const location = locations.reduce((best, current) => {
+			return current.sensors.length > best.sensors.length ? current : best;
+		}, locations[0]);
+
+		if (location) {
+			location.sensors.forEach((sensor) => {
+				sensorMap.set(sensor.parameter.name, sensor.id);
+			});
+		}
+
+		return sensorMap;
+	}
+
 	async getAirQualityData(lat: number, lon: number): Promise<AirQualityData> {
 		const cacheKey = `airquality-${lat}-${lon}`;
 		const cachedData = await cache.get(cacheKey);
@@ -74,22 +128,33 @@ class LocationService {
 				throw new Error('Air quality API key is not configured');
 			}
 
-			const response = await fetch(
-				`/api/openaq/v3/locations?coordinates=${lat},${lon}&radius=12000&limit=1000`,
-				{
-					method: 'GET',
-					headers: {
-						'X-API-Key': this.AIR_QUALITY_API_KEY,
-					},
-				}
-			);
+			const sensorIds = await this.getSensorIdsForParameters(lat, lon);
+			const measurements = (
+				await Promise.all(
+					Array.from(sensorIds.entries()).map(async ([parameter, sensorId]) => {
+						const response = await fetch(
+							`/api/openaq/v3/sensors/${sensorId}/measurements`,
+							{
+								headers: {
+									'X-API-Key': this.AIR_QUALITY_API_KEY!,
+								},
+							}
+						);
 
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
+						if (!response.ok) return null;
 
-			const data = await response.json();
-			const measurements = data.results[0]?.measurements || [];
+						const data = await response.json();
+						const value = data.results[0]?.value;
+
+						if (typeof value !== 'number') return null;
+
+						return {
+							parameter,
+							value,
+						};
+					})
+				)
+			).filter((m): m is { parameter: string; value: number } => m !== null);
 
 			const airQualityData: AirQualityData = {
 				co2: this.findMeasurement(measurements, 'co2'),
@@ -124,29 +189,58 @@ class LocationService {
 			if (!this.AIR_QUALITY_API_KEY) {
 				throw new Error('Air quality API key is not configured');
 			}
-			const dateFrom = new Date(
-				Date.now() - days * 24 * 60 * 60 * 1000
-			).toISOString();
-			const response = await fetch(
-				`/api/openaq/v2/measurements?coordinates=${lat},${lon}&radius=10000&date_from=${dateFrom}`,
-				{
-					headers: new Headers({
-						Accept: 'application/json',
-						'X-API-Key': this.AIR_QUALITY_API_KEY,
-					}),
-				}
+
+			const sensorIds = await this.getSensorIdsForParameters(lat, lon);
+			const historicalDataMap = new Map<string, HistoricalData>();
+
+			await Promise.all(
+				Array.from(sensorIds.entries()).map(async ([parameter, sensorId]) => {
+					const response = await fetch(
+						`/api/openaq/v3/sensors/${sensorId}/measurements/dayofweek?limit=${days}`,
+						{
+							headers: {
+								'X-API-Key': this.AIR_QUALITY_API_KEY!,
+							},
+						}
+					);
+
+					if (!response.ok) return;
+
+					const data = await response.json();
+					data.results.forEach((result: any) => {
+						const timestamp = new Date(
+							result.period.datetimeFrom.utc
+						).getTime();
+						const timeKey = timestamp.toString();
+
+						if (!historicalDataMap.has(timeKey)) {
+							historicalDataMap.set(timeKey, {
+								timestamp,
+								co2: 0,
+								no2: 0,
+								o3: 0,
+								pm25: 0,
+								location: null!, // Will be set later
+							});
+						}
+
+						const current = historicalDataMap.get(timeKey)!;
+						if (parameter in current) {
+							current[
+								parameter as keyof Omit<
+									HistoricalData,
+									'timestamp' | 'location'
+								>
+							] = result.value;
+						}
+					});
+				})
 			);
 
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-
-			const data = await response.json();
-			const historicalData = await this.formatHistoricalData(
-				data.results || [],
-				lat,
-				lon
-			);
+			const location = await this.getCityFromCoordinates(lat, lon);
+			const historicalData = Array.from(historicalDataMap.values())
+				.map((data) => ({ ...data, location }))
+				.sort((a, b) => a.timestamp - b.timestamp);
 
 			await cache.set(cacheKey, JSON.stringify(historicalData), this.CACHE_TTL);
 			return historicalData;
@@ -157,10 +251,10 @@ class LocationService {
 	}
 
 	private findMeasurement(
-		measurements: AirQualityMeasurement[],
+		measurements: { parameter: string; value: number }[] | null[],
 		parameter: string
 	): number {
-		return measurements.find((m) => m.parameter === parameter)?.value || 0;
+		return measurements.find((m) => m?.parameter === parameter)?.value || 0;
 	}
 
 	private async formatHistoricalData(

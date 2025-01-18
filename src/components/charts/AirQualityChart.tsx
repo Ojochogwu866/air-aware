@@ -20,9 +20,7 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 }) => {
 	const { state } = useAirQualityContext();
 
-	// Filter historical data for the selected city
 	const filteredData = state.historicalData.filter((data) => {
-		// Now we can safely access location data from historicalData
 		return (
 			data.location &&
 			data.location.latitude === cityLocation.latitude &&
@@ -31,8 +29,10 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 	});
 
 	return (
-		<div className="h-96 rounded-lg bg-white p-4 shadow">
-			<h2 className="mb-4 text-lg font-semibold">Historical Data</h2>
+		<div className="h-96 rounded-lg bg-[#181818] p-4">
+			<h2 className="mb-4 text-lg font-semibold text-gray-100">
+				Historical Data
+			</h2>
 			<ResponsiveContainer width="100%" height="90%">
 				<LineChart data={filteredData}>
 					<XAxis
@@ -40,39 +40,55 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 						tickFormatter={(timestamp) =>
 							new Date(timestamp).toLocaleTimeString()
 						}
+						stroke="#9CA3AF"
+						tick={{ fill: '#9CA3AF' }}
 					/>
-					<YAxis />
+					<YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
 					<Tooltip
 						labelFormatter={(timestamp) => new Date(timestamp).toLocaleString()}
+						contentStyle={{
+							backgroundColor: '#282828',
+							border: '1px solid #404040',
+							borderRadius: '6px',
+							color: '#F3F4F6',
+						}}
 					/>
-					<Legend />
+					<Legend
+						wrapperStyle={{
+							color: '#9CA3AF',
+						}}
+					/>
 					<Line
 						type="monotone"
 						dataKey="co2"
-						stroke="#2563eb"
+						stroke="#60A5FA"
 						name="CO₂"
 						dot={false}
+						strokeWidth={2}
 					/>
 					<Line
 						type="monotone"
 						dataKey="no2"
-						stroke="#16a34a"
+						stroke="#4ADE80"
 						name="NO₂"
 						dot={false}
+						strokeWidth={2}
 					/>
 					<Line
 						type="monotone"
 						dataKey="o3"
-						stroke="#9333ea"
+						stroke="#C084FC"
 						name="O₃"
 						dot={false}
+						strokeWidth={2}
 					/>
 					<Line
 						type="monotone"
 						dataKey="pm25"
-						stroke="#dc2626"
+						stroke="#FB7185"
 						name="PM2.5"
 						dot={false}
+						strokeWidth={2}
 					/>
 				</LineChart>
 			</ResponsiveContainer>
