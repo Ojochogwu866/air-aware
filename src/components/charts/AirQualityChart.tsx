@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Legend,
 	Line,
@@ -9,6 +9,8 @@ import {
 	YAxis,
 } from 'recharts';
 import { useAirQualityContext } from '../../context/AirQualityContext';
+import { locationService } from '../../services/location';
+import { HistoricalData } from '../../types/airQuality';
 import { GeoLocation } from '../../types/location';
 
 interface DetailedChartProps {
@@ -18,27 +20,55 @@ interface DetailedChartProps {
 export const DetailedChart: React.FC<DetailedChartProps> = ({
 	cityLocation,
 }) => {
-	const { state } = useAirQualityContext();
+	useAirQualityContext();
+	const [loading, setLoading] = useState(true);
+	const [historicalData, setHistoricalData] = useState<HistoricalData[]>([]);
 
-	const filteredData = state.historicalData.filter((data) => {
+	useEffect(() => {
+		const fetchHistoricalData = async () => {
+			try {
+				setLoading(true);
+				const data = await locationService.getHistoricalData(
+					cityLocation.latitude,
+					cityLocation.longitude,
+					7
+				);
+				setHistoricalData(data);
+			} catch (error) {
+				console.error('Failed to fetch historical data:', error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchHistoricalData();
+	}, [cityLocation.latitude, cityLocation.longitude]);
+
+	if (loading) {
 		return (
-			data.location &&
-			data.location.latitude === cityLocation.latitude &&
-			data.location.longitude === cityLocation.longitude
+			<div className="flex h-96 items-center justify-center rounded-lg bg-[#181818] p-4">
+				<div className="text-gray-400">Loading historical data...</div>
+			</div>
 		);
-	});
+	}
+
+	const chartData = historicalData.map((data) => ({
+		...data,
+		timestamp: new Date(data.timestamp).getTime(),
+		formattedTime: new Date(data.timestamp).toLocaleString(),
+	}));
 
 	return (
 		<div className="h-96 rounded-lg bg-[#181818] p-4">
 			<h2 className="mb-4 text-lg font-semibold text-gray-100">
-				Historical Data
+				Historical Data for {cityLocation.city}
 			</h2>
 			<ResponsiveContainer width="100%" height="90%">
-				<LineChart data={filteredData}>
+				<LineChart data={chartData}>
 					<XAxis
 						dataKey="timestamp"
 						tickFormatter={(timestamp) =>
-							new Date(timestamp).toLocaleTimeString()
+							new Date(timestamp).toLocaleDateString()
 						}
 						stroke="#9CA3AF"
 						tick={{ fill: '#9CA3AF' }}
@@ -62,7 +92,7 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 						type="monotone"
 						dataKey="co"
 						stroke="#60A5FA"
-						name="CO₂"
+						name="CO"
 						dot={false}
 						strokeWidth={2}
 					/>

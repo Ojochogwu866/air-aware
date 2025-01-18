@@ -196,7 +196,7 @@ class LocationService {
 			await Promise.all(
 				Array.from(sensorIds.entries()).map(async ([parameter, sensorId]) => {
 					const response = await fetch(
-						`/api/openaq/v3/sensors/${sensorId}/measurements/dayofweek?limit=${days}`,
+						`/api/openaq/v3/sensors/${sensorId}/days`,
 						{
 							headers: {
 								'X-API-Key': this.AIR_QUALITY_API_KEY!,

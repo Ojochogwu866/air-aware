@@ -44,7 +44,7 @@ export const Settings: React.FC = () => {
 								</h3>
 								<div className="grid grid-cols-2 gap-4">
 									<ThresholdInput
-										label="CO₂ (ppm)"
+										label="CO (ppm)"
 										value={state.settings.alertThresholds.co}
 										onChange={(value) =>
 											handleSettingsChange({

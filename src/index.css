@@ -5,11 +5,11 @@
 @tailwind utilities;
 body {
 	margin: 0;
-	  font-family: "Plus Jakarta Sans", serif;
+	font-family: 'Plus Jakarta Sans', serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-	  font-family: "Plus Jakarta Sans", serif;
+	font-family: 'Plus Jakarta Sans', serif;
 }
