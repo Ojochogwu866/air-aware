@@ -45,7 +45,7 @@ function App() {
 
 	if (loading) {
 		return (
-			<div className="flex h-[600px] w-[600px] items-center justify-center bg-[#121212]">
+			<div className="flex h-[700px] w-[600px] items-center justify-center bg-[#121212]">
 				<div className="text-center">
 					<div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-gray-400"></div>
 					<p className="mt-4 text-gray-400">Loading air quality data</p>
@@ -56,7 +56,7 @@ function App() {
 
 	if (error) {
 		return (
-			<div className="h-[600px] w-[600px] bg-[#121212] p-4">
+			<div className="h-[700px] w-[600px] bg-[#121212] p-4">
 				<div className="rounded-lg border border-[#282828] bg-[#181818] p-4">
 					<h3 className="font-medium text-gray-200">Error</h3>
 					<p className="mt-2 text-gray-400">{error}</p>
@@ -72,7 +72,7 @@ function App() {
 	}
 
 	return (
-		<div className="h-[600px] w-[600px] bg-[#121212]">
+		<div className="h-[700px] w-[600px] bg-[#121212]">
 			{selectedCity ? (
 				<AirQualityMonitor />
 			) : (

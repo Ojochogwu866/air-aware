@@ -23,7 +23,7 @@ export const AirQualityMonitor: React.FC = () => {
 	if (error) return <ErrorDisplay message={error} />;
 
 	return (
-		<div className="h-[600px] w-[600px] overflow-y-auto bg-[#121212] p-4">
+		<div className="h-[700px] w-[600px] overflow-y-auto bg-[#121212] p-4">
 			<div className="mb-4 flex items-center justify-between">
 				<div className="flex-1">
 					{view === 'detail' && (

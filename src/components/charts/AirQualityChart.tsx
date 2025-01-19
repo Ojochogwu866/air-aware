@@ -47,7 +47,7 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 	if (loading) {
 		return (
 			<div className="flex h-96 items-center justify-center rounded-lg bg-[#181818] p-4">
-				<div className="text-gray-400">Loading historical data...</div>
+				<div className="text-gray-400">Loading historical data</div>
 			</div>
 		);
 	}
