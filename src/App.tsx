@@ -57,12 +57,12 @@ function App() {
 	if (error) {
 		return (
 			<div className="h-[700px] w-[600px] bg-[#121212] p-4">
-				<div className="rounded-lg border border-[#282828] bg-[#181818] p-4">
+				<div className=" border border-[#282828] bg-[#181818] p-4">
 					<h3 className="font-medium text-gray-200">Error</h3>
 					<p className="mt-2 text-gray-400">{error}</p>
 					<button
 						onClick={() => window.location.reload()}
-						className="mt-4 rounded bg-[#282828] px-4 py-2 text-gray-200 transition-colors hover:bg-[#383838]"
+						className="mt-4  bg-[#282828] px-4 py-2 text-gray-200 transition-colors hover:bg-[#383838]"
 					>
 						Retry
 					</button>

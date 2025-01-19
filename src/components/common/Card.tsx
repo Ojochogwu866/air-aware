@@ -11,7 +11,7 @@ export const Card: React.FC<CardProps> = ({
 	className = '',
 	onClick,
 }) => (
-	<div className={`rounded-lg p-4 shadow-sm ${className}`} onClick={onClick}>
+	<div className={`p-4 shadow-sm ${className}`} onClick={onClick}>
 		{children}
 	</div>
 );

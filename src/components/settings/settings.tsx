@@ -26,7 +26,7 @@ export const Settings: React.FC = () => {
 
 			{isOpen && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-					<div className="w-[90%] max-w-[540px] rounded-lg border border-[#282828] bg-[#181818] p-6 shadow-lg">
+					<div className="w-[90%] max-w-[540px]  border border-[#282828] bg-[#181818] p-6 shadow-lg">
 						<div className="mb-6 flex items-center justify-between">
 							<h2 className="text-xl font-semibold text-gray-200">Settings</h2>
 							<button
@@ -106,7 +106,7 @@ export const Settings: React.FC = () => {
 											refreshInterval: Number(e.target.value),
 										})
 									}
-									className="w-full appearance-none rounded-lg border border-[#404040] bg-[#282828] px-3 py-2 text-gray-100 transition-colors [-moz-appearance:textfield] focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+									className="w-full appearance-none border border-[#404040] bg-[#282828] px-3 py-2 text-gray-100 transition-colors [-moz-appearance:textfield] focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
 									min="10"
 									max="300"
 								/>
@@ -122,7 +122,7 @@ export const Settings: React.FC = () => {
 												emailNotifications: e.target.checked,
 											})
 										}
-										className="rounded border-[#282828] bg-[#282828] text-blue-600"
+										className=" border-[#282828] bg-[#282828] text-blue-600"
 									/>
 									<span className="text-sm text-gray-200">
 										Enable email notifications
@@ -136,11 +136,11 @@ export const Settings: React.FC = () => {
 											value={email}
 											onChange={(e) => setEmail(e.target.value)}
 											placeholder="Enter your email"
-											className="w-full flex-1 rounded-lg border border-[#404040] bg-[#282828] px-3 py-2 text-gray-100 transition-colors focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+											className="w-full flex-1  border border-[#404040] bg-[#282828] px-3 py-2 text-gray-100 transition-colors focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
 										/>
 										<button
 											aria-label="submit"
-											className="flex items-center justify-center rounded-md bg-[#008060] px-4 py-2 transition-colors hover:bg-[#006e52]"
+											className="flex items-center justify-center  bg-[#008060] px-4 py-2 transition-colors hover:bg-[#006e52]"
 											onClick={() => {
 												console.log('Submit email:', email);
 											}}
