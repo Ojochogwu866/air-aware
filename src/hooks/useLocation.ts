@@ -43,7 +43,10 @@ export function useLocation() {
 				setState((prev) => ({
 					...prev,
 					loading: false,
-					// error: error.message,
+					error:
+						error instanceof Error
+							? error.message
+							: 'An unknown error occurred',
 				}));
 			}
 		}

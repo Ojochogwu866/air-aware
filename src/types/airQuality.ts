@@ -13,6 +13,8 @@ export interface Alert {
 	id: string;
 	type: AlertType;
 	threshold: number;
+	pollutant: string; 
+	location: string;
 	value: number;
 	timestamp: number;
 }
@@ -20,7 +22,8 @@ export interface Alert {
 export interface Settings {
 	refreshInterval: number;
 	alertThresholds: AirQualityThresholds;
-	emailNotifications: boolean;
+	browserNotifications: boolean;
+	notificationSound: boolean;
 }
 
 export interface AirQualityState {
@@ -30,7 +33,6 @@ export interface AirQualityState {
 	settings: Settings;
 }
 
-// Modified to extend AirQualityData to include location
 export interface HistoricalData extends AirQualityData {
 	timestamp: number;
 	co: number;

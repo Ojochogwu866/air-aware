@@ -3,11 +3,8 @@ import { CIcon } from '@coreui/icons-react';
 import React, { useState } from 'react';
 import { useLocation } from '../hooks/useLocation';
 import { GeoLocation } from '../types/location';
-import { AirQualityGrid } from './air-quality/AirQualityGrid';
-import { CityHeader } from './air-quality/CityHeader';
 import { CityDetail } from './CityDetail';
 import { CityList } from './CityList';
-import { Card } from './common/Card';
 import { LoadingSpinner } from './common/LoadingSpinner';
 import { SearchBar } from './common/SearchBar';
 import { ErrorDisplay } from './ErrorDisplay';
@@ -17,7 +14,7 @@ export const AirQualityMonitor: React.FC = () => {
 	const [view, setView] = useState<'list' | 'detail'>('list');
 	const [selectedCity, setSelectedCity] = useState<GeoLocation | null>(null);
 	const [searchQuery, setSearchQuery] = useState('');
-	const { loading, error, location, airQuality } = useLocation();
+	const { loading, error } = useLocation();
 
 	if (loading) return <LoadingSpinner />;
 	if (error) return <ErrorDisplay message={error} />;
@@ -54,12 +51,6 @@ export const AirQualityMonitor: React.FC = () => {
 				/>
 			) : (
 				<>
-					{location && airQuality && (
-						<Card className="mb-6 border-[#282828] bg-[#181818] hover:bg-[#282828]">
-							<CityHeader city={location.city} country={location.country} />
-							<AirQualityGrid data={airQuality} />
-						</Card>
-					)}
 					<SearchBar
 						value={searchQuery}
 						onChange={setSearchQuery}

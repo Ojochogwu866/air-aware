@@ -14,6 +14,15 @@ module.exports = {
 			height: {
 				popup: '600px',
 			},
+			animation: {
+				'scrolling-text': 'scrolling 20s linear infinite',
+			},
+			keyframes: {
+				scrolling: {
+					'0%': { transform: 'translateX(100%)' },
+					'100%': { transform: 'translateX(-100%)' },
+				},
+			},
 		},
 	},
 	plugins: [],

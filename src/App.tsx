@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AirQualityMonitor } from './components/AirQualityMonitor';
+import Navigation from './components/Navigation';
+import PollutantOrbit from './components/PollutantOrbit';
 import { useAirQualityContext } from './context/AirQualityContext';
 import { locationService } from './services/location';
 import { GeoLocation } from './types/location';
@@ -45,10 +47,12 @@ function App() {
 
 	if (loading) {
 		return (
-			<div className="flex h-[700px] w-[600px] items-center justify-center bg-[#121212]">
-				<div className="text-center">
-					<div className="mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-gray-400"></div>
-					<p className="mt-4 text-gray-400">Loading air quality data</p>
+			<div className="flex h-[700px] w-[600px] flex-col bg-[#121212]">
+				<Navigation city="Loading" />
+				<div className="flex flex-1 items-center justify-center">
+					<div className="text-center">
+						<PollutantOrbit />
+					</div>
 				</div>
 			</div>
 		);
@@ -56,28 +60,33 @@ function App() {
 
 	if (error) {
 		return (
-			<div className="h-[700px] w-[600px] bg-[#121212] p-4">
-				<div className=" border border-[#282828] bg-[#181818] p-4">
-					<h3 className="font-medium text-gray-200">Error</h3>
-					<p className="mt-2 text-gray-400">{error}</p>
-					<button
-						onClick={() => window.location.reload()}
-						className="mt-4  bg-[#282828] px-4 py-2 text-gray-200 transition-colors hover:bg-[#383838]"
-					>
-						Retry
-					</button>
+			<div className="flex h-[700px] w-[600px] flex-col bg-[#121212]">
+				<Navigation city="Error" />
+				<div className="flex-1 p-4">
+					<div className="border border-[#282828] bg-[#181818] p-4">
+						<h3 className="font-medium text-gray-200">Error</h3>
+						<p className="mt-2 text-gray-400">{error}</p>
+						<button
+							onClick={() => window.location.reload()}
+							className="mt-4 bg-[#282828] px-4 py-2 text-gray-200 transition-colors hover:bg-[#383838]"
+						>
+							Retry
+						</button>
+					</div>
 				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="h-[700px] w-[600px] bg-[#121212]">
+		<div className="flex w-[600px] h-[700px] flex-col bg-[#121212]">
+			<Navigation city={selectedCity?.city || 'Loading'} />
 			{selectedCity ? (
-				<AirQualityMonitor />
+				<div className="flex-1">
+					<AirQualityMonitor />
+				</div>
 			) : (
 				<div className="p-4">
-					<h1 className="mb-4 text-2xl font-bold text-gray-200">AirAware</h1>
 					<p className="mb-2 text-gray-400">Loading location data</p>
 				</div>
 			)}

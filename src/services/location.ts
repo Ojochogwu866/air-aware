@@ -333,3 +333,9 @@ class LocationService {
 }
 
 export const locationService = new LocationService();
+
+export const fetchAirQualityData = async (): Promise<AirQualityData> => {
+	const position = await locationService.getCurrentPosition();
+	const { latitude, longitude } = position.coords;
+	return locationService.getAirQualityData(latitude, longitude);
+};
