@@ -5,6 +5,7 @@ import PollutantOrbit from './components/PollutantOrbit';
 import { useAirQualityContext } from './context/AirQualityContext';
 import { locationService } from './services/location';
 import { GeoLocation } from './types/location';
+import { LoadingSpinner } from './components/common/LoadingSpinner';
 
 function App() {
 	const { dispatch } = useAirQualityContext();
@@ -87,7 +88,7 @@ function App() {
 				</div>
 			) : (
 				<div className="p-4">
-					<p className="mb-2 text-gray-400">Loading location data</p>
+					<p className="mb-2 text-gray-400"><LoadingSpinner /></p>
 				</div>
 			)}
 		</div>

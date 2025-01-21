@@ -12,7 +12,7 @@ import { useAirQualityContext } from '../../context/AirQualityContext';
 import { locationService } from '../../services/location';
 import { HistoricalData } from '../../types/airQuality';
 import { GeoLocation } from '../../types/location';
-
+import { LoadingSpinner } from '../common/LoadingSpinner';
 interface DetailedChartProps {
     cityLocation: GeoLocation;
 }
@@ -46,7 +46,7 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
     if (loading) {
         return (
             <div className="flex h-[20rem] items-center justify-center">
-                <div className="text-gray-400">Loading historical data</div>
+                <div className="text-gray-400"><LoadingSpinner /></div>
             </div>
         );
     }
