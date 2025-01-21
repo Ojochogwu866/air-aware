@@ -19,7 +19,14 @@ export const Settings: React.FC = () => {
 
 	const handleSave = () => {
 		dispatch({ type: 'UPDATE_SETTINGS', payload: tempSettings });
-		// Close modal or show success message
+		setIsOpen(false);
+		chrome.notifications.create({
+			type: 'basic',
+			iconUrl: '/icon48.png',
+			title: 'Settings Saved',
+			message: 'Your settings have been updated successfully',
+			priority: 0,
+		});
 	};
 
 	return (
@@ -140,7 +147,7 @@ export const Settings: React.FC = () => {
 
 							<button
 								onClick={handleSave}
-								className="mt-4 rounded bg-[#008060] px-4 py-2 text-white"
+								className="mt-4 rounded bg-[#008060] px-4 py-2 text-white hover:bg-[#006048]"
 							>
 								Save Settings
 							</button>

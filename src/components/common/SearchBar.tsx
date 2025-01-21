@@ -19,7 +19,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 			value={value}
 			onChange={(e) => onChange(e.target.value)}
 			placeholder={placeholder}
-			className="w-full  border border-[#404040] bg-[#282828] py-2 pl-10 pr-4 text-gray-100 transition-colors placeholder:text-gray-500 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+			className="w-full border border-[#404040] bg-[#282828] py-2 pl-10 pr-4 text-gray-100 transition-colors placeholder:text-gray-500 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
 		/>
 		<CIcon
 			icon={cilSearch}

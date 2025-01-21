@@ -5,7 +5,7 @@ import { useAirQualityContext } from '../../context/AirQualityContext';
 import { Alert } from '../../types/airQuality';
 
 const AlertItem: React.FC<{ alert: Alert }> = ({ alert }) => (
-	<div className=" border border-[#282828] bg-[#181818] p-4">
+	<div className="border border-[#282828] bg-[#181818] p-4">
 		<div className="flex items-center gap-2">
 			<CIcon icon={cilInfo} className="h-5 w-5 text-gray-400" />
 			<div>
@@ -28,7 +28,7 @@ export const AlertsList: React.FC = () => {
 
 	if (state.alerts.length === 0) {
 		return (
-			<div className=" border border-[#282828] bg-[#181818] p-4 text-center text-gray-400">
+			<div className="border border-[#282828] bg-[#181818] p-4 text-center text-gray-400">
 				No active alerts
 			</div>
 		);

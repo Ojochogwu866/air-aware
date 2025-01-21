@@ -79,7 +79,7 @@ function App() {
 	}
 
 	return (
-		<div className="flex w-[600px] h-[700px] flex-col bg-[#121212]">
+		<div className="flex h-[700px] w-[600px] flex-col bg-[#121212]">
 			<Navigation city={selectedCity?.city || 'Loading'} />
 			{selectedCity ? (
 				<div className="flex-1">

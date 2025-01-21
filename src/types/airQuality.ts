@@ -13,7 +13,7 @@ export interface Alert {
 	id: string;
 	type: AlertType;
 	threshold: number;
-	pollutant: string; 
+	pollutant: string;
 	location: string;
 	value: number;
 	timestamp: number;

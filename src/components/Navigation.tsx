@@ -10,11 +10,13 @@ const Navigation = ({ city }: { city: string }) => {
 	};
 
 	return (
-		<div className="flex h-[70px] relative  w-full items-center bg-black text-white border-b border-[#9CA3AF]">
+		<div className="relative flex h-[70px] w-full items-center border-b border-[#9CA3AF] bg-black text-white">
 			<div className="flex w-full items-center justify-between px-4">
-				<div className='border-r flex justify-center items-center border-[#9CA3AF] pr-[20px] h-[70px]'>
-				<h1 className="font-['Space_Grotesk'] text-xl font-bold ">Air-Aware</h1>
-</div>
+				<div className="flex h-[70px] items-center justify-center border-r border-[#9CA3AF] pr-[20px]">
+					<h1 className="font-['Space_Grotesk'] text-xl font-bold">
+						Air-Aware
+					</h1>
+				</div>
 				<div className="flex-1 overflow-hidden pl-4">
 					<div className="animate-scrolling-text whitespace-nowrap font-['JetBrains_Mono']">
 						<span className="inline-block">

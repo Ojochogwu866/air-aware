@@ -59,7 +59,7 @@ export const DetailedChart: React.FC<DetailedChartProps> = ({
 	}));
 
 	return (
-		<div className="h-96  bg-[#181818] p-4">
+		<div className="h-96 bg-[#181818] p-4">
 			<h2 className="mb-4 text-lg font-semibold text-gray-100">
 				Historical Data for {cityLocation.city}
 			</h2>
