@@ -1,3 +1,4 @@
+/// <reference types="chrome"/>
 import { fetchAirQualityData } from '../src/services/location';
 import { Alert, AlertType, Settings } from '../src/types/airQuality';
 import { AirQualityData } from '../src/types/location';

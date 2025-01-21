@@ -47,7 +47,7 @@ function App() {
 
 	if (loading) {
 		return (
-			<div className="flex h-[700px] w-[600px] flex-col bg-[#121212]">
+			<div className="flex h-[500px] w-[400px] flex-col bg-[#121212]">
 				<Navigation city="Loading" />
 				<div className="flex flex-1 items-center justify-center">
 					<div className="text-center">
@@ -60,7 +60,7 @@ function App() {
 
 	if (error) {
 		return (
-			<div className="flex h-[700px] w-[600px] flex-col bg-[#121212]">
+			<div className="flex h-[500px] w-[400px] flex-col bg-[#121212]">
 				<Navigation city="Error" />
 				<div className="flex-1 p-4">
 					<div className="border border-[#282828] bg-[#181818] p-4">
@@ -79,7 +79,7 @@ function App() {
 	}
 
 	return (
-		<div className="flex h-[700px] w-[600px] flex-col bg-[#121212]">
+		<div className="flex h-[500px] w-[400px] flex-col bg-[#121212]">
 			<Navigation city={selectedCity?.city || 'Loading'} />
 			{selectedCity ? (
 				<div className="flex-1">

@@ -7,6 +7,7 @@
 @tailwind utilities;
 body {
 	margin: 0;
+	background-color: 121212;
 	font-family: 'Plus Jakarta Sans', serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -27,4 +28,27 @@ code {
 
 .animate-scrolling-text {
 	animation: scrolling 20s linear infinite;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #181818;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #404040;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a4a4a;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #404040 #181818;
 }

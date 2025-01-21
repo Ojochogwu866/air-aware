@@ -9,12 +9,12 @@ interface CityDetailProps {
 
 export const CityDetail: React.FC<CityDetailProps> = ({ city, onBack }) => {
 	return (
-		<div className="h-[600px] w-full bg-[#121212]">
-			<h2 className="mb-4 text-xl font-semibold text-gray-100">
+		<div className="w-full h-[500px] bg-[#121212]">
+			<h2 className="mb-4 text-base font-medium text-gray-100">
 				{city.city}, <span className="text-gray-400">{city.country}</span>
 			</h2>
 
-			<div className="bg-[#181818] p-4">
+			<div className="bg-[#181818]">
 				<DetailedChart cityLocation={city} />
 			</div>
 		</div>

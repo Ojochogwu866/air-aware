@@ -147,7 +147,7 @@ export const Settings: React.FC = () => {
 
 							<button
 								onClick={handleSave}
-								className="mt-4 rounded bg-[#008060] px-4 py-2 text-white hover:bg-[#006048]"
+								className="mt-4 bg-[#008060] px-4 py-2 text-white hover:bg-[#006048]"
 							>
 								Save Settings
 							</button>

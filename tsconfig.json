@@ -20,6 +20,6 @@
 			"@/*": ["src/*"]
 		}
 	},
-	"include": ["src"],
+	"include": ["src", "public/background.ts"],
 	"exclude": ["node_modules"]
 }

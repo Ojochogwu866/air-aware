@@ -24,7 +24,7 @@ export const CityCard: React.FC<CityCardProps> = ({
 			onMouseLeave={() => setIsHovered(false)}
 		>
 			<Card
-				className={`cursor-pointer ${
+				className={`cursor-pointer h-[200px] flex flex-col item-start justify-between ${
 					highlight ? 'border-[#282828] bg-[#181818]' : 'bg-[#181818]'
 				} ${
 					!highlight && isHovered

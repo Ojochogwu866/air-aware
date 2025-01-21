@@ -23,9 +23,9 @@ interface LocationResponse {
 }
 
 class LocationService {
-	private readonly GEOCODING_API_KEY = process.env.REACT_APP_GEOCODING_API_KEY;
+	private readonly GEOCODING_API_KEY = '7f158e275cdb4f5eafc17673a676f3a7';
 	private readonly AIR_QUALITY_API_KEY =
-		process.env.REACT_APP_AIR_QUALITY_API_KEY;
+		'1d228d5abf6a36e8b9e4014519881da557a00625e45eefa60de82cf9241b3cc1';
 	private readonly CACHE_TTL = 60 * 60;
 
 	async getCurrentPosition(): Promise<GeolocationPosition> {
@@ -34,11 +34,21 @@ class LocationService {
 				reject(new Error('Geolocation is not supported'));
 				return;
 			}
-			navigator.geolocation.getCurrentPosition(resolve, reject, {
-				enableHighAccuracy: true,
-				timeout: 5000,
-				maximumAge: 0,
-			});
+
+			navigator.permissions
+				.query({ name: 'geolocation' })
+				.then((permissionStatus) => {
+					if (permissionStatus.state === 'denied') {
+						reject(new Error('Geolocation permission denied'));
+						return;
+					}
+
+					navigator.geolocation.getCurrentPosition(resolve, reject, {
+						enableHighAccuracy: true,
+						timeout: 5000,
+						maximumAge: 0,
+					});
+				});
 		});
 	}
 
@@ -86,7 +96,7 @@ class LocationService {
 		lon: number
 	): Promise<Map<string, number>> {
 		const response = await fetch(
-			`/api/openaq/v3/locations?coordinates=${lat},${lon}&radius=12000&limit=1000`,
+			`https://api.openaq.org/v3/locations?coordinates=${lat},${lon}&radius=12000&limit=1000`,
 			{
 				headers: {
 					'X-API-Key': this.AIR_QUALITY_API_KEY!,
@@ -133,7 +143,7 @@ class LocationService {
 				await Promise.all(
 					Array.from(sensorIds.entries()).map(async ([parameter, sensorId]) => {
 						const response = await fetch(
-							`/api/openaq/v3/sensors/${sensorId}/hours`,
+							`https://api.openaq.org/v3/sensors/${sensorId}/hours`,
 							{
 								headers: {
 									'X-API-Key': this.AIR_QUALITY_API_KEY!,
@@ -196,7 +206,7 @@ class LocationService {
 			await Promise.all(
 				Array.from(sensorIds.entries()).map(async ([parameter, sensorId]) => {
 					const response = await fetch(
-						`/api/openaq/v3/sensors/${sensorId}/days/monthly`,
+						`https://api.openaq.org/v3/sensors/${sensorId}/days/monthly`,
 						{
 							headers: {
 								'X-API-Key': this.AIR_QUALITY_API_KEY!,
