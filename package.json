@@ -11,6 +11,8 @@
 	"dependencies": {
 		"@coreui/icons": "^3.0.1",
 		"@coreui/icons-react": "^2.3.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.2.0",
 		"@types/chrome": "^0.0.297",
 		"date-fns": "^4.1.0",
 		"react": "^18.3.1",
@@ -21,7 +23,9 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build && webpack --config webpack.config.js --mode production",
 		"build:extension": "webpack --config webpack.config.js --mode production",
-		"test": "react-scripts test"
+		"test": "vitest",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest watch"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -42,6 +46,7 @@
 		]
 	},
 	"devDependencies": {
+		"@vitest/coverage-v8": "^3.0.3",
 		"clean-webpack-plugin": "^4.0.0",
 		"copy-webpack-plugin": "^12.0.2",
 		"html-webpack-plugin": "^5.6.3",
@@ -50,6 +55,7 @@
 		"tailwindcss": "^3.4.17",
 		"ts-loader": "^9.5.2",
 		"typescript": "^5.7.3",
+		"vitest": "^3.0.3",
 		"webpack": "^5.97.1",
 		"webpack-cli": "^6.0.1",
 		"webpack-dev-server": "^5.2.0"
