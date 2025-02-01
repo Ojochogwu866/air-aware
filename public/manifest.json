@@ -1,34 +1,34 @@
 {
-	"manifest_version": 3,
-	"name": "AirAware",
-	"version": "1.0.0",
-	"description": "Real-time air quality monitoring and alerts for your location",
-	"permissions": ["geolocation", "storage", "alarms", "notifications"],
-	"host_permissions": [
-		"https://api.openaq.org/*",
-		"https://api.opencagedata.com/*"
-	],
-	"action": {
-		"default_popup": "index.html",
-		"default_icon": {
-			"16": "icons/icon16.png",
-			"32": "icons/icon32.png",
-			"48": "icons/icon48.png",
-			"128": "icons/icon128.png"
-		}
-	},
-	"icons": {
-		"16": "icons/icon16.png",
-		"32": "icons/icon32.png",
-		"48": "icons/icon48.png",
-		"128": "icons/icon128.png"
-	},
-	"background": {
-		"service_worker": "background.js",
-		"scripts": ["background.js"],
-		"type": "module"
-	},
-	"content_security_policy": {
-		"extension_pages": "script-src 'self'; object-src 'self'"
-	}
+    "manifest_version": 3,
+    "name": "AirAware",
+    "version": "1.0.0",
+    "description": "Real-time air quality monitoring and alerts for your location",
+    "permissions": ["geolocation", "storage", "alarms", "notifications"],
+    "host_permissions": [
+        "https://api.openaq.org/*",
+        "https://api.opencagedata.com/*"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';",
+        "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+    }
 }
