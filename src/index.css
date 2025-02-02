@@ -52,3 +52,12 @@ code {
     scrollbar-width: thin;
     scrollbar-color: #404040 #181818;
 }
+
+.hide-scrollbar {
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}

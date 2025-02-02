@@ -9,7 +9,7 @@ interface CityDetailProps {
 
 export const CityDetail: React.FC<CityDetailProps> = ({ city, onBack }) => {
 	return (
-		<div className="w-full h-[500px] bg-[#121212]">
+		<div className="w-full h-auto bg-[#121212]">
 			<h2 className="mb-4 text-base font-medium text-gray-100">
 				{city.city}, <span className="text-gray-400">{city.country}</span>
 			</h2>
